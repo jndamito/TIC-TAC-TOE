@@ -33,7 +33,7 @@ jobs:
       - name: Build and push
         run: |
           docker build -t tictactoe .
-          docker tag obs jndamito/joshrepo:tic-tac-toe
+          docker tag tictactoe jndamito/joshrepo:tic-tac-toe
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker push jndamito/joshrepo:tic-tac-toe
         env: 
