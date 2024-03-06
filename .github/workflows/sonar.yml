@@ -23,3 +23,18 @@ jobs:
 
       - name: Trivy file scan
         run: trivy fs . > trivyfs.txt
+
+  docker:
+    runs-on: [Linux]
+    needs: [build-analyze-scan]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push
+        run: |
+          docker build -t tictactoe .
+          docker tag obs jndamito/joshrepo:tic-tac-toe
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push jndamito/joshrepo:tic-tac-toe
+        env: 
+          DOCKER_CLI_ACI: 1
